@@ -1,0 +1,78 @@
+\begin{definition} [Spatial domain] \hfill
+    The section of the real plane spanned by the coordinates of an image is
+    called the spatial domain.
+\end{definition}
+
+\begin{definition} [Spatial coordinates] \hfill
+    $x$ and $y$ coordinates of spatial domain (also are called as spatial
+    variables).
+\end{definition}
+
+\section{Intensity Transformations vs Spatial Filtering}
+
+\paragraph*{} Image processing \textbf{transform}s data (intensity) of pixels to
+another data.
+
+\paragraph*{}Both \emph{spatial processing} and \emph{transform processing}
+transformations do transformatinos. So what is the different? 
+
+\paragraph*{} Incorrect thought about spatial processing ways:
+\begin{enumerate}
+    \item \st{work on pixels and we know intensity of each pixel will be
+    transformed to what}
+    \item \st{Directly change the intensity of pixels by a transformation.}
+\end{enumerate}
+
+\paragraph*{}{Specification of \emph{transform processing} ways: \newline
+First transforming an image into the transform domain, doing the processing
+there, and obtaining the inverse transform to bring the results back into the
+spatial domain.}
+
+\paragraph*{} In both \emph{Spatial processing} and \emph{transform processing}
+transformations, transformation may be a combination of multiple
+transformations; but in spatial processing the \textbf{meaning of pixel}s
+remains. It means after any transformation, the result is an image, and so the
+result of all transformations. But in \emph{transform domain}, there is a time
+you do a transformation but its result is not an image (when you transform
+image to transform domain); although the result of all transformations
+in a \emph{transform domain} is also an image.
+
+\section{Spatial processing ways}
+
+\begin{itemize}
+\item
+  Intensity transformations\\
+  (point processing)\\
+  Its inputs are all pixels with same intensity\\
+  In intensity transformations, $s=T(r)$ shows the output only depends on
+  intensity of pixel $\Leftrightarrow$  all pixels with same intensity will have
+  same output.\\
+  \emph{usage}:contrast manipulation and image thresholding
+\item
+  Spatial ﬁltering\\
+  (neighborhood processing)\\
+  Performs operations on the neighborhood of every pixel\\
+  \emph{usage}:image smoothing and sharpening
+\end{itemize}
+
+\newglossaryentry{spatial_domain_glossary_label:intensity compression}
+{
+type={spatial_domain_glossary_label},
+name={intensity compression},
+description={image is washed-out more darker}}
+
+\newglossaryentry{spatial_domain_glossary_label:intensity widening}
+{
+type={spatial_domain_glossary_label},
+name={intensity widening},
+description={(intensity expanding) more lighter image}}
+
+% \gls*{intensity compression}
+% \gls*{intensity widening}
+
+% Use the terms
+include \gls{spatial_domain_glossary_label:intensity compression} and \gls{spatial_domain_glossary_label:intensity widening}.
+ 
+%\begingroup\let\newpage\relax
+\printglossary[type=spatial_domain_glossary_label]
+%\endgroup
