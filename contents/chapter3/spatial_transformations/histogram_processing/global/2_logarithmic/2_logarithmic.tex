@@ -19,15 +19,12 @@ logarithms,  above equation says those are scaled with a constant.
 \paragraph{}Above means: `a narrow range into the wider range'. But does not say about:
 \begin{itemize}
     \item which narrow range to which wider range?
-    \item output of narrow rangw is lighter or darker than input?
+    \item output of narrow range is lighter or darker than input?
 \end{itemize}
-\paragraph{Purpose} of logarithmic transformation is increasing intensity of
+\paragraph{Purpose}\label{purpose_of_logarithmic_transformation} of 
+logarithmic transformation is increasing intensity of
 dark pixels (a bit) and also decreasing intensity of light pixels (a bit). So
 pixels that have low intensity will be more visible. 
-
-\paragraph*{}\care
-    If most of details are represented in pixels with higher intensity, then
-    applying logarithmic transformation will cause in loss of information\footnote{this is caused by both of human eye detection limits and mathematical operation limits of computer which causes rounding.}. 
 
 \paragraph{}At first a question rises: Suppose we have an image \emph{A} with
 intensities in $[0,255]$. We know $\log(1+A) \leq  \log(256) < 2.5$. So
@@ -73,24 +70,65 @@ we say the logarithmic transformation will appear more details in darker pixels?
     input intervals monotonically increases from $0$ up to $r=45$ and then
     decreases down to $0$.  
 So we understand that the ratio of size of output of interval to the size of
-range of logarithmic transformation is greater than or equal to the ratio of size of input to the size of input domain. So we can say the output is wider in 
-its domain. And also we see that the intensity of output will be greater in its
+range of logarithmic transformation is greater than or equal to the ratio of 
+size of input to the size of input domain. So we can say the output is wider in 
+its domain, or logarithmic transformation is an 
+\gls{spatial_domain_glossary_label:intensity widening} transformation. 
+And also we see that the intensity of output will be greater in its
 color space (which is $[0,1]$) than intensity of input in its color space (which
 is $[0,255]$), although the value of intensity of input is greater than
 intensity of output. As ratio of intensity to length of color space determines
 the pixel color in grayscale images, we understand why we say logarithmic
 transformation will increase intensity of darker pixels. 
-
+Also output of below sample code, which is shown in 
+\autoref{fig:logarithmic_transformation_widening_and_compressing}, shows 
+some of above facts. For example: the logarithmic transformation expands 
+the $[0,50]$ of $[0,255]$ to the more than $60\%$ of target possible 
+range\footnote{$(L-1) \times [0, 0.6]$} and $[150,255]$ to less than 
+$20\%$ of upper limit of target range\footnote{$(L-1) \times [0.8, 1]$}:
+\begin{Verbatim}[frame=single,label=Octave lab:\ Logarithmic transformation ]
+    pkg load image;
+    X=linspace (1,256,1000);
+    Y=log(1+X);
+    GY=mat2gray (Y);
+    figure;plot(X,GY)
+\end{Verbatim}
+\begin{figure}[htb!]
+    \includegraphics[scale=0.4]{logarithmic_transformation_widening_and_compressing.eps}
+    \centering
+    \caption{logarithmic transformation widening and compressing}
+    \label{fig:logarithmic_transformation_widening_and_compressing}
+\end{figure}
 \item Now another question rises: Why \texttt{imhist(log(1+A))} only has a one
 vertical line at $x=1$ and \texttt{imshow(log(1+A))} is white? This question
-leads us to the second prospect which is related to \emph{Octave lab}
+leads us to the second prospect which is related to 
+\hyperref[Octave_notes_for_Logarithmic_transformation]
+{Octave notes for Logarithmic transformation}.
  
 \end{enumerate}
 
+\subsubsection{Notes about details and quality}
 
-\subsubsection{Octave lab}
+As we saw before, logarithmic transformation is an 
+\gls{spatial_domain_glossary_label:intensity widening}, 
+so this satisfies the 
+\hyperref[purpose_of_logarithmic_transformation]
+{purpose of logarithmic transformation}. But what about lighter pixels? 
+As \autoref{fig:logarithmic_transformation_widening_and_compressing} shows, 
+logarithmic transformation compresses intensity of pixels which are in the range 
+$[150,255]$. So:
 
-The other prospect is relative to the way that a matrix be interpreted as an
+\paragraph*{}\care
+    If most of details are represented in pixels with higher intensity, then
+    applying logarithmic transformation will cause in loss of 
+    information\footnote{this is caused by both of human eye detection limits 
+    and mathematical operation limits of computer which causes rounding.}. 
+
+
+\subsubsection{Octave notes for Logarithmic transformation}
+\label{Octave_notes_for_Logarithmic_transformation}
+
+\paragraph{}The other prospect is relative to the way that a matrix be interpreted as an
 image in \emph{Octave}: If the data type of matrix be double, then its range
 must in $[0,1]$ and any data greater than 1 will be replaced by $1$ 
 and any data less than $0$ will replaced by $0$. And if daata type is int,
@@ -113,27 +151,6 @@ single vertical line at $x = 1$. If you compare \texttt{imhist(A)} and
 than original image (\texttt{A}); with attention to the concept of wider that is
 described in previous paragraph. So the real logarithmic transformation in
 \emph{Octave} is \texttt{mat2gray(log(1+A))}.
-Also we understood that when $r$ is in $[0,255]$, intensity of \texttt{s = mat2gray(log(1+r))} (in $[0,1]$) is greater than 
+Also we understood that when $r$ is in $[0,255]$, intensity of 
+\texttt{s = mat2gray(log(1+r))} (in $[0,1]$) is greater than 
 $r$ in $[0,255]$. 
-
-
-\paragraph{}Some details about widening and compressing
-
-You can test by this sample code:
-
-\begin{Verbatim}[frame=single,label=Octave lab:\ Logarithmic transformation ]
-    pkg load image;
-    X=linspace (1,256,1000);
-    Y=log(1+X);
-    GY=mat2gray (Y);
-    figure;plot(X,GY)
-\end{Verbatim}
-
-
-
-\begin{figure}[htb!]
-    \includegraphics[scale=0.4]{logarithmic_transformation_widening_and_compressing.eps}
-    \centering
-    \caption{logarithmic transformation widening and compressing}
-    \label{fig:logarithmic_transformation_widening_and_compressing.eps}
-\end{figure}
