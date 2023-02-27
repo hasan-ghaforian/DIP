@@ -69,11 +69,10 @@ we say the logarithmic transformation will appear more details in darker pixels?
     or greater than input. It also determines difference between output and
     input intervals monotonically increases from $0$ up to $r=45$ and then
     decreases down to $0$.  
-So we understand that the ratio of size of output of interval to the size of
-range of logarithmic transformation is greater than or equal to the ratio of 
-size of input to the size of input domain. So we can say the output is wider in 
-its domain, or logarithmic transformation is an 
-\gls{spatial_domain_glossary_label:intensity widening} transformation. 
+So we understand that the ratio of size of output of $[0,r]$ when $r \not= 255$
+to the size of range of logarithmic transformation is greater than or equal to
+the ratio of size of input to the size of input domain. So we can say the output
+is wider in its domain, or logarithmic transformation expands $[0,r]$. 
 And also we see that the intensity of output will be greater in its
 color space (which is $[0,1]$) than intensity of input in its color space (which
 is $[0,255]$), although the value of intensity of input is greater than
@@ -85,7 +84,8 @@ Also output of below sample code, which is shown in
 some of above facts. For example: the logarithmic transformation expands 
 the $[0,50]$ of $[0,255]$ to the more than $60\%$ of target possible 
 range\footnote{$(L-1) \times [0, 0.6]$} and $[150,255]$ to less than 
-$20\%$ of upper limit of target range\footnote{$(L-1) \times [0.8, 1]$}:
+$20\%$ of upper limit of target range\footnote{$(L-1) \times [0.8, 1]$}. This
+means that this transformation compresses the $[r,255]$:
 \begin{Verbatim}[frame=single,label=Octave lab:\ Logarithmic transformation ]
     pkg load image;
     X=linspace (1,256,1000);
@@ -109,14 +109,11 @@ leads us to the second prospect which is related to
 
 \subsubsection{Notes about details and quality}
 
-As we saw before, logarithmic transformation is an 
-\gls{spatial_domain_glossary_label:intensity widening}, 
-so this satisfies the 
-\hyperref[purpose_of_logarithmic_transformation]
-{purpose of logarithmic transformation}. But what about lighter pixels? 
-As \autoref{fig:logarithmic_transformation_widening_and_compressing} shows, 
-logarithmic transformation compresses intensity of pixels which are in the range 
-$[150,255]$. So:
+As we saw before, logarithmic transformation expands $[0,r]$, so this satisfies
+the \hyperref[purpose_of_logarithmic_transformation] {purpose of logarithmic
+transformation}. But what about lighter pixels? As \autoref
+{fig:logarithmic_transformation_widening_and_compressing} shows, 
+logarithmic transformation compresses intensity of pixels which are in the range $[150,255]$. So:
 
 \paragraph*{}\care
     If most of details are represented in pixels with higher intensity, then
