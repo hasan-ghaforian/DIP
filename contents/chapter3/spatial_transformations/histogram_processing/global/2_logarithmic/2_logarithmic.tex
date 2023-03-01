@@ -22,9 +22,8 @@ logarithms,  above equation says those are scaled with a constant.
     \item output of narrow range is lighter or darker than input?
 \end{itemize}
 \paragraph{Purpose}\label{purpose_of_logarithmic_transformation} of 
-logarithmic transformation is increasing intensity of
-dark pixels (a bit) and also decreasing intensity of light pixels (a bit). So
-pixels that have low intensity will be more visible. 
+logarithmic transformation is increasing intensity of pixels: a bit for light
+pixels and a more for dark pixels. So pixels that have low intensity will be more visible. 
 
 \paragraph{}At first a question rises: Suppose we have an image \emph{A} with
 intensities in $[0,255]$. We know $\log(1+A) \leq  \log(256) < 2.5$. So
@@ -45,9 +44,9 @@ we say the logarithmic transformation will appear more details in darker pixels?
     will be rational (note that because $f$ is monotonically increasing, so $f(max(R))-f(min(R))$ determines range of $f$ and 
     $max(R)-min(R)$ determines range of original data types):
     \begin{Verbatim}[frame=single,label=Octave lab:\ logarithmic-data-type-conversion]
-        X=linspace (1,256,1000);
-        Y=(log(X)/log(256))-(X-1)/256;
-        plot(X,Y);   
+        > X=linspace (1,256,1000);
+        > Y=(log(X)/log(256))-(X-1)/256;
+        > plot(X,Y);   
     \end{Verbatim}
     For above sample code, see the \hyperref[note:note_about_log_base]{notes
     about base of logarithm bases}.
@@ -78,20 +77,27 @@ color space (which is $[0,1]$) than intensity of input in its color space (which
 is $[0,255]$), although the value of intensity of input is greater than
 intensity of output. As ratio of intensity to length of color space determines
 the pixel color in grayscale images, we understand why we say logarithmic
-transformation will increase intensity of darker pixels. 
+transformation will expand $[0,r]$ and give us a lighter image:
+\begin{figure}[htb!]
+    \includegraphics[scale=0.4]{logarithmic_on_dark_image.eps}
+    \centering
+    \caption{logarithmic on dark image}
+    \label{fig:logarithmic_on_dark_image}
+\end{figure}
 Also output of below sample code, which is shown in 
 \autoref{fig:logarithmic_transformation_widening_and_compressing}, shows 
 some of above facts. For example: the logarithmic transformation expands 
 the $[0,50]$ of $[0,255]$ to the more than $60\%$ of target possible 
 range\footnote{$(L-1) \times [0, 0.6]$} and $[150,255]$ to less than 
 $20\%$ of upper limit of target range\footnote{$(L-1) \times [0.8, 1]$}. This
-means that this transformation compresses the $[r,255]$:
+means that this transformation compresses the $[r,255]$, although the result is
+more lighter even for $[r,255]$:
 \begin{Verbatim}[frame=single,label=Octave lab:\ Logarithmic transformation ]
-    pkg load image;
-    X=linspace (1,256,1000);
-    Y=log(1+X);
-    GY=mat2gray (Y);
-    figure;plot(X,GY)
+    > pkg load image;
+    > X=linspace (1,256,1000);
+    > Y=log(X);
+    > GY=mat2gray (Y);
+    > figure;plot(X,GY)
 \end{Verbatim}
 \begin{figure}[htb!]
     \includegraphics[scale=0.4]{logarithmic_transformation_widening_and_compressing.eps}
@@ -111,16 +117,23 @@ leads us to the second prospect which is related to
 
 As we saw before, logarithmic transformation expands $[0,r]$, so this satisfies
 the \hyperref[purpose_of_logarithmic_transformation] {purpose of logarithmic
-transformation}. But what about lighter pixels? As \autoref
-{fig:logarithmic_transformation_widening_and_compressing} shows, 
+transformation} and result will be lighter.But what about lighter pixels? As \autoref{fig:logarithmic_transformation_widening_and_compressing} shows, 
 logarithmic transformation compresses intensity of pixels which are in the range $[150,255]$. So:
 
 \paragraph*{}\care
     If most of details are represented in pixels with higher intensity, then
-    applying logarithmic transformation will cause in loss of 
+    applying logarithmic transformation probably will cause in loss of 
     information\footnote{this is caused by both of human eye detection limits 
     and mathematical operation limits of computer which causes rounding.}. 
-
+    
+\paragraph{}For example logarithmic transformation on original below sample
+image will be completely white:
+    \begin{figure}[htb!]
+        \includegraphics[scale=0.4]{logarithmic_on_light_image.eps}
+        \centering
+        \caption{logarithmic on light image}
+        \label{fig:logarithmic_on_light_image}
+\end{figure}
 
 \subsubsection{Octave notes for Logarithmic transformation}
 \label{Octave_notes_for_Logarithmic_transformation}
@@ -140,14 +153,36 @@ of type int. The command \texttt{im2double(uint8(log(1+A)))} will be an
 image in range $[0,1]$; but \emph{uint8} causes data loss and image will be
 pixelized. So we have to use \texttt{mat2gray} command: 
 \begin{Verbatim}
-    B =mat2gray(log(1+A))
+    > B =mat2gray(log(1+A))
 \end{Verbatim}
 If you try to show \texttt{B}, it will be an image and its histogram is not a
 single vertical line at $x = 1$. If you compare \texttt{imhist(A)} and
 \texttt{imhist(B)}, you visually see that histogram of transformation is wider
 than original image (\texttt{A}); with attention to the concept of wider that is
-described in previous paragraph. So the real logarithmic transformation in
-\emph{Octave} is \texttt{mat2gray(log(1+A))}.
-Also we understood that when $r$ is in $[0,255]$, intensity of 
-\texttt{s = mat2gray(log(1+r))} (in $[0,1]$) is greater than 
-$r$ in $[0,255]$. 
+described in previous paragraphs. The
+\autoref{fig:displaying_logarithmic_transformation_in_octave} shows result of
+different commands.
+    \begin{figure}[htb!]
+        \includegraphics[scale=0.4]{displaying_logarithmic_transformation_in_octave.eps}
+        \centering
+        \caption{displaying logarithmic transformation in octave}
+        \label{fig:displaying_logarithmic_transformation_in_octave}
+    \end{figure}
+\paragraph*{}So a good command for displaying logarithmic transformation in \emph{Octave} is
+\texttt{mat2gray(log(1+A))}. But that is true when result of \texttt{log}
+command include pixels with both $0$ and $L_{source\ color\ space}-1$ intensities. Else
+\texttt{mat2gray} maps minimum of intensities to $0$ and maximum of them to
+$L_{target\ color\ space}-1$ and this may be confusing. In this cases, it is
+better to scale the result of \texttt{log} yourself:
+\begin{Verbatim}[frame=single,label=Octave lab:\ Scale matrix yourself ]
+    > A=imread("a.png");
+    > A=rgb2gray(A);
+    > figure;subplot(1,2,1);imshow(A);title("A");
+    > L=log(1+A);
+    > minL=min(L(:));
+    > maxL=max(L(:));
+    > scaledL=A/(maxL-minL);
+    > subplot(1,2,2);imshow(scaledL,'InitialMagnification','fit')
+    ;title("scaledL"); 
+\end{Verbatim}
+
