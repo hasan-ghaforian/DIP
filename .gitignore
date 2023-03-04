@@ -1,0 +1,5 @@
+*.* 
+Book_test
+!*.eps
+!.gitignore
+
