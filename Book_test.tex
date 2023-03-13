@@ -31,6 +31,9 @@
     pdfpagemode=FullScreen,
     }
 
+\usepackage{fontspec}
+\newfontfamily\verbatimfont{Fira Code}[NFSSFamily=myverbatimfont_for_box_characters]
+
 \title{My first book}
 \author{Me}
 \date{\today}
@@ -62,10 +65,10 @@
 \import{./contents/Preface}{preface.tex}
 
 \mainmatter
-\part{Spacial Processing}
+\part{Spatial Processing}
 This part is from `chapter 3' of Gonzalez.
 
-\chapter{Meaning of Spacial Processing}
+\chapter{Meaning of Spatial Processing}
 
 \import{./contents/chapter3}{Spatial_domain_dfinition.tex}
 

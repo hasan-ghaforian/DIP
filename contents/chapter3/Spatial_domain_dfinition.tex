@@ -1,3 +1,9 @@
+\begin{definition} [Spatial] \hfill
+    relating to, occupying, or having the character of space
+\end{definition}
+
+Merriam-Webster dictionary: Spatial or less commonly \emph{spacial}
+
 \begin{definition} [Spatial domain] \hfill
     The section of the real plane spanned by the coordinates of an image is
     called the spatial domain.
@@ -8,7 +14,29 @@
     variables).
 \end{definition}
 
+\begin{tiny}
+  \begin{Verbatim}[fontfamily=myverbatimfont_for_box_characters]
+                                                           ┌───► Intensity transformation
+                          ┌───────────► Spatial            │
+                          │    (spatial domain processing)─┤
+                          │                                │
+                          │                                └───► Spatial Filtering
+                          │
+                          │
+    Image    ───► which ──┤
+  processing      domain? │
+                          │
+                          │
+                          │
+                          │
+                          └───────────► Transform
+                               (frequency domain processing)
+  \end{Verbatim}
+\end{tiny}
+
 \section{Intensity Transformations vs Spatial Filtering}
+
+
 
 \paragraph*{} Image processing \textbf{transform}s data (intensity) of pixels to
 another data.
