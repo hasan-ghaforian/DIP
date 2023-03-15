@@ -1,0 +1,130 @@
+\subsection{What is brightness histogram?}
+
+\paragraph*{} The \textbf{brightness histogram} $h_f(z)$ of an image $f$
+provides the frequency of the intensity value $z$ in the image. The histogram of
+an image with $L$ gray-levels is represented by a one-dimensional array with $L$
+elements. If image $f$ be distinct, we may use $h(z)$.
+
+\paragraph*{} Let $r_k$ , for $k = 0, 1, 2, … , L - 1$, denote the intensities
+of an $L$-level digital image $f(x,y)$. Then \emph{unnormalized histogram} of
+$f$ is defined as: 
+
+\[
+    h_f(r_k) = n_k \text{ when } n_k \text{ is the number of pixels in } f \text{ with intensity } r_k
+\]
+We call $r_k$s as \emph{histogram bin}s of $f$.
+
+If size of $f$ is $MN$ then its \emph{normalized} histogram is defined as:
+\[
+    p_f(r_k) = \frac{h_f(r_k)}{MN}
+\]
+
+The normalized histogram provides a natural bridge between images and a
+probabilistic description. 
+
+The histogram is usually the \emph{only global information} about the image
+which is available. For example it is used when:
+\begin{itemize}
+\item gray-scale transformations
+\item image segmentation to objects and background    
+\end{itemize}
+
+\subsubsection*{Same histogram for different images}
+
+Histogram show the frequency of intensities in each image. So if two images
+have the same frequences for the same histogram bins, then their histograms will
+be the same. This may occur in different situations; but I think all of them are
+relative to \emph{permutation of pixels} in the $MN$ spatial domain. For
+example: 
+\begin{itemize}
+    \item the histogram of $[0 \ 1]$ binary image is the same as $[1 \ 0]$
+    image, although images are different. 
+    \item change
+    of the object position on a constant background does not affect the
+    histogram of image.
+\end{itemize}
+
+
+\subsection{Entropy}
+
+\[
+    H(X) = -\sum\limits_{i=1}^{L-1}p(x_i)\log_2(p(x_i))
+\]
+
+\subsection{Affect of point processing on histograms}
+
+As previously we saw in \hyperref[intensity transformation definition]{intensity
+transformation definition}, all pixels with same intensity will have same output
+under a point processing transformation. But $1-1$ property of point processing
+transformation is not guaranteed. So it is possible that pixels of $r_1$ and
+$r_2$ bins map to the same $s_0$ bin.  In this case, the height of histogram at
+$s_0$ will be the sum of heights of histogram of source image at all $r_i$s
+which are mapped to $s_0$. But if the transformation $T$ be $1-1$ and transform
+image $f$ to the $g$; for example
+when $T$ is monotonically increasing, then:
+\[
+    h_f(r_k) = h_g(T(r_k))
+\]
+This means the height of a bin and its image under the $T$ will be the same. See
+\autoref{fig:1-1 point transformation keeps height of bars}. So in this cases,
+\textbf{only} the position of bins can be changed and hence shape of histogram
+may be \emph{shrinkage} or \emph{stretch} horizontally in different places
+(\st{vertically}). Later we will see examples of shrinkage (compressing) and
+stretch (expanding) of histograms.
+
+But not all $1-1$ point processing transformations shrinkage or stretch the
+histogram. For example $T = r + c$, when is a $1-1$ transformation\footnote{If
+$r+c$ exceeds bounds of $[0,L-1]$, then it may be not $1-1$.}, only moves the
+histogram horizontally. 
+
+
+\begin{figure}[htb!]
+    \begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-0.5,xscale=0.5]
+        %uncomment if require: \path (0,300); %set diagram left start at 0, and has height of 300
+            
+            %Shape: Axis 2D [id:dp9231531780387925] 
+            \draw  (50,280.35) -- (345,280.35)(79.5,54) -- (79.5,305.5) (338,275.35) -- (345,280.35) -- (338,285.35) (74.5,61) -- (79.5,54) -- (84.5,61)  ;
+            %Curve Lines [id:da9193569106111694] 
+            \draw    (79.5,280.35) .. controls (90,103.5) and (275,22.5) .. (302,14.5) ;
+            %Straight Lines [id:da905539517417276] 
+            \draw [color={rgb, 255:red, 188; green, 27; blue, 27 }  ,draw opacity=1 ] [dash pattern={on 4.5pt off 4.5pt}]  (180.43,88.43) -- (181.15,280.15) ;
+            %Straight Lines [id:da275519737489504] 
+            \draw [color={rgb, 255:red, 45; green, 53; blue, 107 }  ,draw opacity=1 ][fill={rgb, 255:red, 82; green, 134; blue, 197 }  ,fill opacity=1 ]   (180.75,196.38) -- (181.15,280.15) ;
+            %Straight Lines [id:da8637126099678687] 
+            \draw  [dash pattern={on 0.84pt off 2.51pt}]  (79.57,88.71) -- (180.43,88.43) ;
+            %Straight Lines [id:da3425284278838454] 
+            \draw  [dash pattern={on 0.84pt off 2.51pt}]  (79.57,196.71) -- (180.43,196.43) ;
+            %Shape: Axis 2D [id:dp6424593616756209] 
+            \draw  (562,280.35) -- (857,280.35)(591.5,54) -- (591.5,305.5) (850,275.35) -- (857,280.35) -- (850,285.35) (586.5,61) -- (591.5,54) -- (596.5,61)  ;
+            %Straight Lines [id:da2616151731156716] 
+            \draw [color={rgb, 255:red, 45; green, 53; blue, 107 }  ,draw opacity=1 ][fill={rgb, 255:red, 82; green, 134; blue, 197 }  ,fill opacity=1 ]   (784.74,196.57) -- (785.14,280.35) ;
+            %Straight Lines [id:da6457821008770631] 
+            \draw  [dash pattern={on 0.84pt off 2.51pt}]  (591.57,196.71) -- (784.74,196.57) ;
+            %Shape: Circle [id:dp04840312389851564] 
+            \draw   (397.86,280.35) .. controls (397.86,173.4) and (484.55,86.71) .. (591.5,86.71) .. controls (698.45,86.71) and (785.14,173.4) .. (785.14,280.35) .. controls (785.14,387.3) and (698.45,473.99) .. (591.5,473.99) .. controls (484.55,473.99) and (397.86,387.3) .. (397.86,280.35) -- cycle ;
+            %Straight Lines [id:da44634990042210343] 
+            \draw  [dash pattern={on 3.75pt off 3pt on 7.5pt off 1.5pt}]  (79.5,280.35) -- (200,160.13) ;
+            
+            % Text Node
+            \draw (174,282.4) node [anchor=north west][inner sep=0.75pt]    {$r_{1}$};
+            % Text Node
+            \draw (54,80.4) node [anchor=north west][inner sep=0.75pt]    {$s_{1}$};
+            % Text Node
+            \draw (50.43,187.54) node [anchor=north west][inner sep=0.75pt]    {$n_{r_{1}}$};
+            % Text Node
+            \draw (686,282.4) node [anchor=north west][inner sep=0.75pt]    {$r_{1}$};
+            % Text Node
+            \draw (566,80.4) node [anchor=north west][inner sep=0.75pt]    {$s_{1}$};
+            % Text Node
+            \draw (562.43,187.54) node [anchor=north west][inner sep=0.75pt]    {$n_{s_{1}}$};
+            % Text Node
+            \draw (779,283.4) node [anchor=north west][inner sep=0.75pt]    {$s_{1}$};
+            
+            
+    \end{tikzpicture}
+    \centering
+    \caption{\emph{1-1} point transformation keeps height of bars}
+    \label{fig:1-1 point transformation keeps height of bars}
+\end{figure}
+
+\clearpage
