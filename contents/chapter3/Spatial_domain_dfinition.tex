@@ -14,8 +14,12 @@ Merriam-Webster dictionary: Spatial or less commonly \emph{spacial}
     variables).
 \end{definition}
 
+\section{Image processing branches}
+
+\begin{figure}[htb!]
 \begin{tiny}
-  \begin{Verbatim}[fontfamily=myverbatimfont_for_box_characters]
+  \begin{Verbatim}[fontfamily=myverbatimfont_for_box_characters,
+    frame=single,label=Image Processing branches]
                                                            ┌───► Intensity transformation
                           ┌───────────► Spatial            │
                           │    (spatial domain processing)─┤
@@ -33,9 +37,12 @@ Merriam-Webster dictionary: Spatial or less commonly \emph{spacial}
                                (frequency domain processing)
   \end{Verbatim}
 \end{tiny}
+\centering
+\caption{Image Processing branches}
+\label{fig:image_processing_branches}
+\end{figure}
 
-\section{Intensity Transformations vs Spatial Filtering}
-
+\section{Spatial vs Transform}
 
 
 \paragraph*{} Image processing \textbf{transform}s data (intensity) of pixels to
@@ -44,17 +51,26 @@ another data.
 \paragraph*{}Both \emph{spatial processing} and \emph{transform processing}
 transformations do transformatinos. So what is the different? 
 
-\paragraph*{} Incorrect thought about spatial processing ways:
+\paragraph*{} Incorrect thought about \emph{specification} of spatial processing
+ways:
 \begin{enumerate}
     \item \st{work on pixels and we know intensity of each pixel will be
-    transformed to what}
+    transformed to what.}
     \item \st{Directly change the intensity of pixels by a transformation.}
 \end{enumerate}
 
+\paragraph{} The first one is incorrect because all image processing ways work
+on pixels and as data transformation, are mathematical functions, so  their
+outputs are predictable. 
+
+\paragraph{} Second one is incorrect because all transformations directly work
+on their inputs.
+
 \paragraph*{}{Specification of \emph{transform processing} ways: \newline
-First transforming an image into the transform domain, doing the processing
-there, and obtaining the inverse transform to bring the results back into the
-spatial domain.}
+First transforming an image into the transform domain, which its data are not of
+type image pixels (not Spatial domain), then doing the processing there, and
+obtaining the inverse transform to bring the results back into the spatial
+domain.} 
 
 \paragraph*{} In both \emph{Spatial processing} and \emph{transform processing}
 transformations, transformation may be a combination of multiple
@@ -75,10 +91,10 @@ in a \emph{transform domain} is also an image.
   In intensity transformations, $s=T(r)$ shows the output only depends on
   intensity of pixel $\Leftrightarrow$  all pixels with same intensity will have
   same output.\\
-  \emph{usage}:contrast manipulation and image thresholding
+  \emph{usage}: contrast manipulation and image thresholding
 \item
   Spatial ﬁltering\\
   (neighborhood processing)\\
   Performs operations on the neighborhood of every pixel\\
-  \emph{usage}:image smoothing and sharpening
+  \emph{usage}: image smoothing and sharpening
 \end{itemize}
