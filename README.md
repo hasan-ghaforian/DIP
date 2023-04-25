@@ -7,6 +7,8 @@ This repo has assets and tex contents ...
 ## Prepare environment
 
 <pre>
+    $ rm -rf ./DIP_tex/
+    $ rm -rf ./DIP_assets/
     $ git clone https://github.com/hasan-ghaforian/DIP.git
     $ cp -R ./DIP/ ./DIP_assets
     $ cd ./DIP_assets/
