@@ -9,6 +9,7 @@ cd to desired location where "DIP_assets" and "DIP_tex" dires are there, for
 example it may be "~/Documents/Studies/ImageProcessing/DIP_Book". 
 
 <pre>
+    $ rm -rf ./merged/
     $ mkdir merged
     $ cd ./merged
     $ rsync -a ../DIP_tex/ ./
